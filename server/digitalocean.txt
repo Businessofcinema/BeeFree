@@ -1,0 +1,1132 @@
+digital ocean setup
+
+
+
+
+Last login: Mon Apr 24 10:19:39 on ttys012
+(⎈ |minikube:default)x@Xs-MacBook-Pro ~ % ssh alice@137.184.219.147
+load pubkey "/Users/x/.ssh/id_rsa": invalid format
+Enter passphrase for key '/Users/x/.ssh/id_rsa': 
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.15.0-67-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Mon Apr 24 15:48:49 UTC 2023
+
+  System load:  0.1416015625      Users logged in:          1
+  Usage of /:   7.2% of 77.35GB   IPv4 address for docker0: 172.17.0.1
+  Memory usage: 18%               IPv4 address for eth0:    137.184.219.147
+  Swap usage:   0%                IPv4 address for eth0:    10.10.0.5
+  Processes:    118               IPv4 address for eth1:    10.116.0.2
+
+ * Introducing Expanded Security Maintenance for Applications.
+   Receive updates to over 25,000 software packages with your
+   Ubuntu Pro subscription. Free for personal use.
+
+     https://ubuntu.com/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+43 updates can be applied immediately.
+25 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+13 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ apt update
+Reading package lists... Done
+E: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)
+E: Unable to lock directory /var/lib/apt/lists/
+W: Problem unlinking the file /var/cache/apt/pkgcache.bin - RemoveCaches (13: Permission denied)
+W: Problem unlinking the file /var/cache/apt/srcpkgcache.bin - RemoveCaches (13: Permission denied)
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt update
+[sudo] password for alice: 
+Sorry, try again.
+[sudo] password for alice: 
+Get:1 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Hit:2 http://mirrors.digitalocean.com/ubuntu jammy InRelease                   
+Hit:3 https://repos.insights.digitalocean.com/apt/do-agent main InRelease      
+Hit:4 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease  
+Get:5 http://mirrors.digitalocean.com/ubuntu jammy-updates InRelease [119 kB]
+Get:6 http://mirrors.digitalocean.com/ubuntu jammy-backports InRelease [108 kB]
+Get:7 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 Packages [1031 kB]
+Get:8 http://mirrors.digitalocean.com/ubuntu jammy-updates/universe amd64 Packages [902 kB]
+Get:9 http://mirrors.digitalocean.com/ubuntu jammy-updates/universe Translation-en [181 kB]
+Fetched 2451 kB in 7s (337 kB/s)                
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+39 packages can be upgraded. Run 'apt list --upgradable' to see them.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt install certbot python3-certbot-apache
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  apache2 apache2-bin apache2-data apache2-utils augeas-lenses libapr1
+  libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap libaugeas0 liblua5.3-0
+  mailcap mime-support python3-acme python3-augeas python3-certbot
+  python3-configargparse python3-icu python3-josepy python3-parsedatetime
+  python3-requests-toolbelt python3-rfc3339 python3-zope.component
+  python3-zope.event python3-zope.hookable ssl-cert
+Suggested packages:
+  apache2-doc apache2-suexec-pristine | apache2-suexec-custom www-browser
+  augeas-doc python-certbot-doc python3-certbot-nginx augeas-tools
+  python-acme-doc python-certbot-apache-doc
+The following NEW packages will be installed:
+  apache2 apache2-bin apache2-data apache2-utils augeas-lenses certbot libapr1
+  libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap libaugeas0 liblua5.3-0
+  mailcap mime-support python3-acme python3-augeas python3-certbot
+  python3-certbot-apache python3-configargparse python3-icu python3-josepy
+  python3-parsedatetime python3-requests-toolbelt python3-rfc3339
+  python3-zope.component python3-zope.event python3-zope.hookable ssl-cert
+0 upgraded, 28 newly installed, 0 to remove and 39 not upgraded.
+Need to get 3655 kB of archives.
+After this operation, 16.1 MB of additional disk space will be used.
+Do you want to continue? [Y/n] 
+Get:1 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libapr1 amd64 1.7.0-8ubuntu0.22.04.1 [108 kB]
+Get:2 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libaprutil1 amd64 1.6.1-5ubuntu4.22.04.1 [92.6 kB]
+Get:3 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libaprutil1-dbd-sqlite3 amd64 1.6.1-5ubuntu4.22.04.1 [11.3 kB]
+Get:4 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libaprutil1-ldap amd64 1.6.1-5ubuntu4.22.04.1 [9168 B]
+Get:5 http://mirrors.digitalocean.com/ubuntu jammy/main amd64 liblua5.3-0 amd64 5.3.6-1build1 [140 kB]
+Get:6 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 apache2-bin amd64 2.4.52-1ubuntu4.4 [1345 kB]
+Get:7 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 apache2-data all 2.4.52-1ubuntu4.4 [165 kB]
+Get:8 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 apache2-utils amd64 2.4.52-1ubuntu4.4 [89.5 kB]
+Get:9 http://mirrors.digitalocean.com/ubuntu jammy/main amd64 mailcap all 3.70+nmu1ubuntu1 [23.8 kB]
+Get:10 http://mirrors.digitalocean.com/ubuntu jammy/main amd64 mime-support all 3.66 [3696 B]
+Get:11 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 apache2 amd64 2.4.52-1ubuntu4.4 [97.8 kB]
+Get:12 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 augeas-lenses all 1.13.0-1 [321 kB]
+Get:13 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 libaugeas0 amd64 1.13.0-1 [200 kB]
+Get:14 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-josepy all 1.10.0-1 [22.0 kB]
+Get:15 http://mirrors.digitalocean.com/ubuntu jammy/main amd64 python3-requests-toolbelt all 0.9.1-1 [38.0 kB]
+Get:16 http://mirrors.digitalocean.com/ubuntu jammy/main amd64 python3-rfc3339 all 1.1-3 [7110 B]
+Get:17 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-acme all 1.21.0-1 [36.3 kB]
+Get:18 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-augeas all 0.5.0-1.1 [9124 B]
+Get:19 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-configargparse all 1.5.3-1 [26.9 kB]
+Get:20 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-parsedatetime all 2.6-2 [32.9 kB]
+Get:21 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-zope.hookable amd64 5.1.0-1build1 [11.6 kB]
+Get:22 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-zope.event all 4.4-3 [8180 B]
+Get:23 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-zope.component all 4.3.0-3 [38.3 kB]
+Get:24 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-certbot all 1.21.0-1build1 [175 kB]
+Get:25 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 certbot all 1.21.0-1build1 [21.3 kB]
+Get:26 http://mirrors.digitalocean.com/ubuntu jammy/universe amd64 python3-certbot-apache all 1.21.0-1 [64.2 kB]
+Get:27 http://mirrors.digitalocean.com/ubuntu jammy/main amd64 python3-icu amd64 2.8.1-0ubuntu2 [540 kB]
+Get:28 http://mirrors.digitalocean.com/ubuntu jammy/main amd64 ssl-cert all 1.1.2 [17.4 kB]
+Fetched 3655 kB in 0s (8023 kB/s)     
+Preconfiguring packages ...
+Selecting previously unselected package libapr1:amd64.
+(Reading database ... 95804 files and directories currently installed.)
+Preparing to unpack .../00-libapr1_1.7.0-8ubuntu0.22.04.1_amd64.deb ...
+Unpacking libapr1:amd64 (1.7.0-8ubuntu0.22.04.1) ...
+Selecting previously unselected package libaprutil1:amd64.
+Preparing to unpack .../01-libaprutil1_1.6.1-5ubuntu4.22.04.1_amd64.deb ...
+Unpacking libaprutil1:amd64 (1.6.1-5ubuntu4.22.04.1) ...
+Selecting previously unselected package libaprutil1-dbd-sqlite3:amd64.
+Preparing to unpack .../02-libaprutil1-dbd-sqlite3_1.6.1-5ubuntu4.22.04.1_amd64.deb ...
+Unpacking libaprutil1-dbd-sqlite3:amd64 (1.6.1-5ubuntu4.22.04.1) ...
+Selecting previously unselected package libaprutil1-ldap:amd64.
+Preparing to unpack .../03-libaprutil1-ldap_1.6.1-5ubuntu4.22.04.1_amd64.deb ...
+Unpacking libaprutil1-ldap:amd64 (1.6.1-5ubuntu4.22.04.1) ...
+Selecting previously unselected package liblua5.3-0:amd64.
+Preparing to unpack .../04-liblua5.3-0_5.3.6-1build1_amd64.deb ...
+Unpacking liblua5.3-0:amd64 (5.3.6-1build1) ...
+Selecting previously unselected package apache2-bin.
+Preparing to unpack .../05-apache2-bin_2.4.52-1ubuntu4.4_amd64.deb ...
+Unpacking apache2-bin (2.4.52-1ubuntu4.4) ...
+Selecting previously unselected package apache2-data.
+Preparing to unpack .../06-apache2-data_2.4.52-1ubuntu4.4_all.deb ...
+Unpacking apache2-data (2.4.52-1ubuntu4.4) ...
+Selecting previously unselected package apache2-utils.
+Preparing to unpack .../07-apache2-utils_2.4.52-1ubuntu4.4_amd64.deb ...
+Unpacking apache2-utils (2.4.52-1ubuntu4.4) ...
+Selecting previously unselected package mailcap.
+Preparing to unpack .../08-mailcap_3.70+nmu1ubuntu1_all.deb ...
+Unpacking mailcap (3.70+nmu1ubuntu1) ...
+Selecting previously unselected package mime-support.
+Preparing to unpack .../09-mime-support_3.66_all.deb ...
+Unpacking mime-support (3.66) ...
+Selecting previously unselected package apache2.
+Preparing to unpack .../10-apache2_2.4.52-1ubuntu4.4_amd64.deb ...
+Unpacking apache2 (2.4.52-1ubuntu4.4) ...
+Selecting previously unselected package augeas-lenses.
+Preparing to unpack .../11-augeas-lenses_1.13.0-1_all.deb ...
+Unpacking augeas-lenses (1.13.0-1) ...
+Selecting previously unselected package libaugeas0:amd64.
+Preparing to unpack .../12-libaugeas0_1.13.0-1_amd64.deb ...
+Unpacking libaugeas0:amd64 (1.13.0-1) ...
+Selecting previously unselected package python3-josepy.
+Preparing to unpack .../13-python3-josepy_1.10.0-1_all.deb ...
+Unpacking python3-josepy (1.10.0-1) ...
+Selecting previously unselected package python3-requests-toolbelt.
+Preparing to unpack .../14-python3-requests-toolbelt_0.9.1-1_all.deb ...
+Unpacking python3-requests-toolbelt (0.9.1-1) ...
+Selecting previously unselected package python3-rfc3339.
+Preparing to unpack .../15-python3-rfc3339_1.1-3_all.deb ...
+Unpacking python3-rfc3339 (1.1-3) ...
+Selecting previously unselected package python3-acme.
+Preparing to unpack .../16-python3-acme_1.21.0-1_all.deb ...
+Unpacking python3-acme (1.21.0-1) ...
+Selecting previously unselected package python3-augeas.
+Preparing to unpack .../17-python3-augeas_0.5.0-1.1_all.deb ...
+Unpacking python3-augeas (0.5.0-1.1) ...
+Selecting previously unselected package python3-configargparse.
+Preparing to unpack .../18-python3-configargparse_1.5.3-1_all.deb ...
+Unpacking python3-configargparse (1.5.3-1) ...
+Selecting previously unselected package python3-parsedatetime.
+Preparing to unpack .../19-python3-parsedatetime_2.6-2_all.deb ...
+Unpacking python3-parsedatetime (2.6-2) ...
+Selecting previously unselected package python3-zope.hookable.
+Preparing to unpack .../20-python3-zope.hookable_5.1.0-1build1_amd64.deb ...
+Unpacking python3-zope.hookable (5.1.0-1build1) ...
+Selecting previously unselected package python3-zope.event.
+Preparing to unpack .../21-python3-zope.event_4.4-3_all.deb ...
+Unpacking python3-zope.event (4.4-3) ...
+Selecting previously unselected package python3-zope.component.
+Preparing to unpack .../22-python3-zope.component_4.3.0-3_all.deb ...
+Unpacking python3-zope.component (4.3.0-3) ...
+Selecting previously unselected package python3-certbot.
+Preparing to unpack .../23-python3-certbot_1.21.0-1build1_all.deb ...
+Unpacking python3-certbot (1.21.0-1build1) ...
+Selecting previously unselected package certbot.
+Preparing to unpack .../24-certbot_1.21.0-1build1_all.deb ...
+Unpacking certbot (1.21.0-1build1) ...
+Selecting previously unselected package python3-certbot-apache.
+Preparing to unpack .../25-python3-certbot-apache_1.21.0-1_all.deb ...
+Unpacking python3-certbot-apache (1.21.0-1) ...
+Selecting previously unselected package python3-icu.
+Preparing to unpack .../26-python3-icu_2.8.1-0ubuntu2_amd64.deb ...
+Unpacking python3-icu (2.8.1-0ubuntu2) ...
+Selecting previously unselected package ssl-cert.
+Preparing to unpack .../27-ssl-cert_1.1.2_all.deb ...
+Unpacking ssl-cert (1.1.2) ...
+Setting up python3-configargparse (1.5.3-1) ...
+Setting up python3-requests-toolbelt (0.9.1-1) ...
+Setting up python3-parsedatetime (2.6-2) ...
+Setting up python3-icu (2.8.1-0ubuntu2) ...
+Setting up augeas-lenses (1.13.0-1) ...
+Setting up python3-zope.event (4.4-3) ...
+Setting up libapr1:amd64 (1.7.0-8ubuntu0.22.04.1) ...
+Setting up python3-zope.hookable (5.1.0-1build1) ...
+Setting up ssl-cert (1.1.2) ...
+Setting up libaugeas0:amd64 (1.13.0-1) ...
+Setting up python3-josepy (1.10.0-1) ...
+Setting up python3-augeas (0.5.0-1.1) ...
+Setting up liblua5.3-0:amd64 (5.3.6-1build1) ...
+Setting up apache2-data (2.4.52-1ubuntu4.4) ...
+Setting up python3-rfc3339 (1.1-3) ...
+Setting up mailcap (3.70+nmu1ubuntu1) ...
+Setting up libaprutil1:amd64 (1.6.1-5ubuntu4.22.04.1) ...
+Setting up mime-support (3.66) ...
+Setting up libaprutil1-ldap:amd64 (1.6.1-5ubuntu4.22.04.1) ...
+Setting up libaprutil1-dbd-sqlite3:amd64 (1.6.1-5ubuntu4.22.04.1) ...
+Setting up python3-zope.component (4.3.0-3) ...
+Setting up python3-acme (1.21.0-1) ...
+Setting up python3-certbot (1.21.0-1build1) ...
+Setting up certbot (1.21.0-1build1) ...
+Created symlink /etc/systemd/system/timers.target.wants/certbot.timer → /lib/systemd/system/certbot.timer.
+Setting up apache2-utils (2.4.52-1ubuntu4.4) ...
+Setting up apache2-bin (2.4.52-1ubuntu4.4) ...
+Setting up apache2 (2.4.52-1ubuntu4.4) ...
+Enabling module mpm_event.
+Enabling module authz_core.
+Enabling module authz_host.
+Enabling module authn_core.
+Enabling module auth_basic.
+Enabling module access_compat.
+Enabling module authn_file.
+Enabling module authz_user.
+Enabling module alias.
+Enabling module dir.
+Enabling module autoindex.
+Enabling module env.
+Enabling module mime.
+Enabling module negotiation.
+Enabling module setenvif.
+Enabling module filter.
+Enabling module deflate.
+Enabling module status.
+Enabling module reqtimeout.
+Enabling conf charset.
+Enabling conf localized-error-pages.
+Enabling conf other-vhosts-access-log.
+Enabling conf security.
+Enabling conf serve-cgi-bin.
+Enabling site 000-default.
+Created symlink /etc/systemd/system/multi-user.target.wants/apache2.service → /lib/systemd/system/apache2.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/apache-htcacheclean.service → /lib/systemd/system/apache-htcacheclean.service.
+Setting up python3-certbot-apache (1.21.0-1) ...
+Processing triggers for ufw (0.36.1-4build1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.1) ...
+Scanning processes...                                                           
+Scanning linux images...                                                        
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ pwd
+/home/alice
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo certbot certonly --webroot --webroot-path=/var/www/html -d superscale.me^C^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/apache2/sites-available/superscale.me.conf
+[sudo] password for alice: 
+Sorry, try again.
+[sudo] password for alice: 
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apache2ctl configtest
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+Syntax OK
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/apache2/sites-available/superscale.me.conf
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ufw app list
+[sudo] password for alice: 
+Available applications:
+  Apache
+  Apache Full
+  Apache Secure
+  OpenSSH
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt-get update && sudo apt-get install nginx
+Hit:1 http://mirrors.digitalocean.com/ubuntu jammy InRelease
+Hit:2 https://repos.insights.digitalocean.com/apt/do-agent main InRelease                                            
+Hit:3 http://mirrors.digitalocean.com/ubuntu jammy-updates InRelease                                                 
+Hit:4 http://mirrors.digitalocean.com/ubuntu jammy-backports InRelease                             
+Hit:5 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                      
+Get:6 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]    
+Fetched 110 kB in 7s (16.5 kB/s)   
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libnginx-mod-http-geoip2 libnginx-mod-http-image-filter libnginx-mod-http-xslt-filter libnginx-mod-mail
+  libnginx-mod-stream libnginx-mod-stream-geoip2 nginx-common nginx-core
+Suggested packages:
+  fcgiwrap nginx-doc
+The following NEW packages will be installed:
+  libnginx-mod-http-geoip2 libnginx-mod-http-image-filter libnginx-mod-http-xslt-filter libnginx-mod-mail
+  libnginx-mod-stream libnginx-mod-stream-geoip2 nginx nginx-common nginx-core
+0 upgraded, 9 newly installed, 0 to remove and 39 not upgraded.
+Need to get 696 kB of archives.
+After this operation, 2395 kB of additional disk space will be used.
+Do you want to continue? [Y/n] 
+Get:1 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 nginx-common all 1.18.0-6ubuntu14.3 [40.0 kB]
+Get:2 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libnginx-mod-http-geoip2 amd64 1.18.0-6ubuntu14.3 [11.9 kB]
+Get:3 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libnginx-mod-http-image-filter amd64 1.18.0-6ubuntu14.3 [15.4 kB]
+Get:4 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libnginx-mod-http-xslt-filter amd64 1.18.0-6ubuntu14.3 [13.7 kB]
+Get:5 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libnginx-mod-mail amd64 1.18.0-6ubuntu14.3 [45.7 kB]
+Get:6 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libnginx-mod-stream amd64 1.18.0-6ubuntu14.3 [72.8 kB]
+Get:7 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 libnginx-mod-stream-geoip2 amd64 1.18.0-6ubuntu14.3 [10.1 kB]
+Get:8 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 nginx-core amd64 1.18.0-6ubuntu14.3 [482 kB]
+Get:9 http://mirrors.digitalocean.com/ubuntu jammy-updates/main amd64 nginx amd64 1.18.0-6ubuntu14.3 [3882 B]
+Fetched 696 kB in 0s (4707 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package nginx-common.
+(Reading database ... 97455 files and directories currently installed.)
+Preparing to unpack .../0-nginx-common_1.18.0-6ubuntu14.3_all.deb ...
+Unpacking nginx-common (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package libnginx-mod-http-geoip2.
+Preparing to unpack .../1-libnginx-mod-http-geoip2_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking libnginx-mod-http-geoip2 (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package libnginx-mod-http-image-filter.
+Preparing to unpack .../2-libnginx-mod-http-image-filter_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking libnginx-mod-http-image-filter (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package libnginx-mod-http-xslt-filter.
+Preparing to unpack .../3-libnginx-mod-http-xslt-filter_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking libnginx-mod-http-xslt-filter (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package libnginx-mod-mail.
+Preparing to unpack .../4-libnginx-mod-mail_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking libnginx-mod-mail (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package libnginx-mod-stream.
+Preparing to unpack .../5-libnginx-mod-stream_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking libnginx-mod-stream (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package libnginx-mod-stream-geoip2.
+Preparing to unpack .../6-libnginx-mod-stream-geoip2_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking libnginx-mod-stream-geoip2 (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package nginx-core.
+Preparing to unpack .../7-nginx-core_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking nginx-core (1.18.0-6ubuntu14.3) ...
+Selecting previously unselected package nginx.
+Preparing to unpack .../8-nginx_1.18.0-6ubuntu14.3_amd64.deb ...
+Unpacking nginx (1.18.0-6ubuntu14.3) ...
+Setting up nginx-common (1.18.0-6ubuntu14.3) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.
+Could not execute systemctl:  at /usr/bin/deb-systemd-invoke line 142.
+Setting up libnginx-mod-http-xslt-filter (1.18.0-6ubuntu14.3) ...
+Setting up libnginx-mod-http-geoip2 (1.18.0-6ubuntu14.3) ...
+Setting up libnginx-mod-mail (1.18.0-6ubuntu14.3) ...
+Setting up libnginx-mod-http-image-filter (1.18.0-6ubuntu14.3) ...
+Setting up libnginx-mod-stream (1.18.0-6ubuntu14.3) ...
+Setting up libnginx-mod-stream-geoip2 (1.18.0-6ubuntu14.3) ...
+Setting up nginx-core (1.18.0-6ubuntu14.3) ...
+Not attempting to start NGINX, port 80 is already in use.
+Setting up nginx (1.18.0-6ubuntu14.3) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for ufw (0.36.1-4build1) ...
+Scanning processes...                                                                                                 
+Scanning linux images...                                                                                              
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ufw app list
+Available applications:
+  Apache
+  Apache Full
+  Apache Secure
+  Nginx Full
+  Nginx HTTP
+  Nginx HTTPS
+  OpenSSH
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ufw allow 'Nginx Full'
+Rules updated
+Rules updated (v6)
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ufw status
+Status: inactive
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ufw enable
+Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+Firewall is active and enabled on system startup
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+Nginx Full                 ALLOW       Anywhere                  
+Nginx Full (v6)            ALLOW       Anywhere (v6)             
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+× nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: failed (Result: exit-code) since Mon 2023-04-24 16:43:28 UTC; 2min 22s ago
+       Docs: man:nginx(8)
+    Process: 30150 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 30151 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=1/FAILURE)
+        CPU: 12ms
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+× nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: failed (Result: exit-code) since Mon 2023-04-24 16:43:28 UTC; 3min 11s ago
+       Docs: man:nginx(8)
+    Process: 30150 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 30151 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=1/FAILURE)
+        CPU: 12ms
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+× nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: failed (Result: exit-code) since Mon 2023-04-24 16:43:28 UTC; 5min ago
+       Docs: man:nginx(8)
+    Process: 30150 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 30151 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=1/FAILURE)
+        CPU: 12ms
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ exit
+logout
+Connection to 137.184.219.147 closed.
+(⎈ |minikube:default)x@Xs-MacBook-Pro ~ % ssh alice@137.184.219.147
+ssh: connect to host 137.184.219.147 port 22: Operation timed out
+(⎈ |minikube:default)x@Xs-MacBook-Pro ~ % ssh alice@137.184.219.147
+load pubkey "/Users/x/.ssh/id_rsa": invalid format
+Enter passphrase for key '/Users/x/.ssh/id_rsa': 
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.15.0-67-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Mon Apr 24 16:51:04 UTC 2023
+
+  System load:  0.0224609375      Users logged in:          0
+  Usage of /:   7.3% of 77.35GB   IPv4 address for docker0: 172.17.0.1
+  Memory usage: 13%               IPv4 address for eth0:    137.184.219.147
+  Swap usage:   0%                IPv4 address for eth0:    10.10.0.5
+  Processes:    112               IPv4 address for eth1:    10.116.0.2
+
+ * Introducing Expanded Security Maintenance for Applications.
+   Receive updates to over 25,000 software packages with your
+   Ubuntu Pro subscription. Free for personal use.
+
+     https://ubuntu.com/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+43 updates can be applied immediately.
+25 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+13 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+Last login: Mon Apr 24 15:48:49 2023 from 24.44.11.57
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo service apache2 status
+[sudo] password for alice: 
+● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 15:51:17 UTC; 1h 7min ago
+       Docs: https://httpd.apache.org/docs/2.4/
+   Main PID: 29011 (apache2)
+      Tasks: 55 (limit: 4661)
+     Memory: 6.5M
+        CPU: 350ms
+     CGroup: /system.slice/apache2.service
+             ├─29011 /usr/sbin/apache2 -k start
+             ├─29012 /usr/sbin/apache2 -k start
+             └─29013 /usr/sbin/apache2 -k start
+
+Apr 24 15:51:16 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Starting The Apache HTTP Server...
+Apr 24 15:51:17 ubuntu-s-2vcpu-4gb-nyc1-01 apachectl[29010]: AH00558: apache2: Could not reliably determine the serve>
+Apr 24 15:51:17 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Started The Apache HTTP Server.
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo service apache2 stop
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+× nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: failed (Result: exit-code) since Mon 2023-04-24 16:43:28 UTC; 16min ago
+       Docs: man:nginx(8)
+    Process: 30150 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 30151 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=1/FAILURE)
+        CPU: 12ms
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt-get update && sudo apt-get install nginx
+Hit:1 https://repos.insights.digitalocean.com/apt/do-agent main InRelease
+Hit:2 http://mirrors.digitalocean.com/ubuntu jammy InRelease                                       
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                      
+Hit:4 http://mirrors.digitalocean.com/ubuntu jammy-updates InRelease                               
+Hit:5 http://mirrors.digitalocean.com/ubuntu jammy-backports InRelease       
+Get:6 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Fetched 110 kB in 7s (16.2 kB/s)   
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+nginx is already the newest version (1.18.0-6ubuntu14.3).
+0 upgraded, 0 newly installed, 0 to remove and 39 not upgraded.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+× nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: failed (Result: exit-code) since Mon 2023-04-24 16:43:28 UTC; 16min ago
+       Docs: man:nginx(8)
+    Process: 30150 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 30151 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=1/FAILURE)
+        CPU: 12ms
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl restart nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:01:15 UTC; 2s ago
+       Docs: man:nginx(8)
+    Process: 31553 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 31554 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 31555 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 8.7M
+        CPU: 45ms
+     CGroup: /system.slice/nginx.service
+             ├─31555 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─31556 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             └─31557 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo service lighttpd status
+Unit lighttpd.service could not be found.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo service nginx status
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:01:15 UTC; 1min 27s ago
+       Docs: man:nginx(8)
+    Process: 31553 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 31554 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 31555 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 8.8M
+        CPU: 57ms
+     CGroup: /system.slice/nginx.service
+             ├─31555 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─31556 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             └─31557 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+
+Apr 24 17:01:15 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Starting A high performance web server and a reverse proxy ser>
+Apr 24 17:01:15 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Started A high performance web server and a reverse proxy serv>
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ which apache2
+/usr/sbin/apache2
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo netstat -plnt | grep ':80'
+sudo: netstat: command not found
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl reload nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:01:15 UTC; 3min 27s ago
+       Docs: man:nginx(8)
+    Process: 31553 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 31554 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 31582 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload (code=exited, status=0/SUCCE>
+   Main PID: 31555 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 8.8M
+        CPU: 93ms
+     CGroup: /system.slice/nginx.service
+             ├─31555 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─31583 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+             └─31584 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" >
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ls
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ cat /etc/nginx/nginx.conf 
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+	worker_connections 768;
+	# multi_accept on;
+}
+
+http {
+
+	##
+	# Basic Settings
+	##
+
+	sendfile on;
+	tcp_nopush on;
+	types_hash_max_size 2048;
+	# server_tokens off;
+
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+
+	##
+	# SSL Settings
+	##
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+	ssl_prefer_server_ciphers on;
+
+	##
+	# Logging Settings
+	##
+
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+
+	##
+	# Gzip Settings
+	##
+
+	gzip on;
+
+	# gzip_vary on;
+	# gzip_proxied any;
+	# gzip_comp_level 6;
+	# gzip_buffers 16 8k;
+	# gzip_http_version 1.1;
+	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+	##
+	# Virtual Host Configs
+	##
+
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#	# See sample authentication script at:
+#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#	# auth_http localhost/auth.php;
+#	# pop3_capabilities "TOP" "USER";
+#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#	server {
+#		listen     localhost:110;
+#		protocol   pop3;
+#		proxy      on;
+#	}
+#
+#	server {
+#		listen     localhost:143;
+#		protocol   imap;
+#		proxy      on;
+#	}
+#}
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl stop apache2
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt-get remove --purge apache2 apache2-utils apache2-bin apache2-data libapache2-mod-* libaprutil1-dbd-sqlite3
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Note, selecting 'libapache2-mod-log-slow' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-log-sql' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-musicindex' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-form' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-cas' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-log-sql-dbi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-bw' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-jk' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-md' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-authn-yolo' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-ruwsgi-dbg' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-perl2-dev' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-perl2-doc' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-mellon' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-lisp' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-log-sql-mysql' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-xsendfile' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-mime-xattr' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-removeip' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-log-sql-ssl' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-tkt' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-wsgi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-apparmor' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-r-base' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-fcgid' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-rpaf' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-netcgi-apache' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-dnssd' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-openid' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-php' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-qos' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-svn' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-php7.4' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-php8.0' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-php8.1' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-gnutls' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-lookup-identity' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-mono' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-encoding' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-scgi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-ldap-userdir-dbg' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-shib' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-kerb' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-evasive' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-vhost-ldap' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-ruwsgi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-uwsgi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-neko' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-passenger' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-apreq2' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-gssapi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-authnz-external' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-authn-yubikey' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-tile' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-watchcat' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-authz-unixgroup' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-ocamlnet' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-uwsgi-dbg' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-authnz-pam' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-plain' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-geoip' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-rivet-doc' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-fastcgi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-intercept-form-submit' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-radius' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-defensible' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-rivet' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-upload-progress' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-form-dev' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-php5' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-pgsql' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-python' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-proxy-uwsgi' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-authn-sasl' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-mapcache' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-ruid2' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-parser3' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-security2' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-openidc' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-auth-pubtkt' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-ldap-userdir' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-python-doc' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-wsgi-py3' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-perl2' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-suphp' for glob 'libapache2-mod-*'
+Note, selecting 'libapache2-mod-xforward' for glob 'libapache2-mod-*'
+Package 'libapache2-mod-wsgi' is not installed, so not removed
+Package 'libapache2-mod-scgi' is not installed, so not removed
+Package 'libapache2-mod-php5' is not installed, so not removed
+Note, selecting 'libapache2-mod-netcgi-apache' instead of 'libapache2-mod-ocamlnet'
+Package 'libapache2-mod-suphp' is not installed, so not removed
+Package 'libapache2-mod-fastcgi' is not installed, so not removed
+Package 'libapache2-mod-auth-mellon' is not installed, so not removed
+Package 'libapache2-mod-auth-pgsql' is not installed, so not removed
+Package 'libapache2-mod-auth-plain' is not installed, so not removed
+Package 'libapache2-mod-perl2' is not installed, so not removed
+Package 'libapache2-mod-perl2-dev' is not installed, so not removed
+Package 'libapache2-mod-perl2-doc' is not installed, so not removed
+Package 'libapache2-mod-php' is not installed, so not removed
+Package 'libapache2-mod-apreq2' is not installed, so not removed
+Package 'libapache2-mod-auth-cas' is not installed, so not removed
+Package 'libapache2-mod-auth-gssapi' is not installed, so not removed
+Package 'libapache2-mod-auth-kerb' is not installed, so not removed
+Package 'libapache2-mod-auth-openid' is not installed, so not removed
+Package 'libapache2-mod-auth-openidc' is not installed, so not removed
+Package 'libapache2-mod-auth-pubtkt' is not installed, so not removed
+Package 'libapache2-mod-auth-radius' is not installed, so not removed
+Package 'libapache2-mod-auth-tkt' is not installed, so not removed
+Package 'libapache2-mod-authn-sasl' is not installed, so not removed
+Package 'libapache2-mod-authn-yolo' is not installed, so not removed
+Package 'libapache2-mod-authn-yubikey' is not installed, so not removed
+Package 'libapache2-mod-authnz-external' is not installed, so not removed
+Package 'libapache2-mod-authnz-pam' is not installed, so not removed
+Package 'libapache2-mod-authz-unixgroup' is not installed, so not removed
+Package 'libapache2-mod-bw' is not installed, so not removed
+Package 'libapache2-mod-defensible' is not installed, so not removed
+Package 'libapache2-mod-dnssd' is not installed, so not removed
+Package 'libapache2-mod-encoding' is not installed, so not removed
+Package 'libapache2-mod-evasive' is not installed, so not removed
+Package 'libapache2-mod-fcgid' is not installed, so not removed
+Package 'libapache2-mod-form' is not installed, so not removed
+Package 'libapache2-mod-form-dev' is not installed, so not removed
+Package 'libapache2-mod-geoip' is not installed, so not removed
+Package 'libapache2-mod-gnutls' is not installed, so not removed
+Package 'libapache2-mod-intercept-form-submit' is not installed, so not removed
+Package 'libapache2-mod-jk' is not installed, so not removed
+Package 'libapache2-mod-ldap-userdir' is not installed, so not removed
+Package 'libapache2-mod-ldap-userdir-dbg' is not installed, so not removed
+Package 'libapache2-mod-lisp' is not installed, so not removed
+Package 'libapache2-mod-log-slow' is not installed, so not removed
+Package 'libapache2-mod-log-sql' is not installed, so not removed
+Package 'libapache2-mod-log-sql-dbi' is not installed, so not removed
+Package 'libapache2-mod-log-sql-mysql' is not installed, so not removed
+Package 'libapache2-mod-log-sql-ssl' is not installed, so not removed
+Package 'libapache2-mod-lookup-identity' is not installed, so not removed
+Package 'libapache2-mod-mapcache' is not installed, so not removed
+Package 'libapache2-mod-mime-xattr' is not installed, so not removed
+Package 'libapache2-mod-mono' is not installed, so not removed
+Package 'libapache2-mod-musicindex' is not installed, so not removed
+Package 'libapache2-mod-neko' is not installed, so not removed
+Package 'libapache2-mod-netcgi-apache' is not installed, so not removed
+Package 'libapache2-mod-parser3' is not installed, so not removed
+Package 'libapache2-mod-passenger' is not installed, so not removed
+Package 'libapache2-mod-python' is not installed, so not removed
+Package 'libapache2-mod-python-doc' is not installed, so not removed
+Package 'libapache2-mod-qos' is not installed, so not removed
+Package 'libapache2-mod-r-base' is not installed, so not removed
+Package 'libapache2-mod-removeip' is not installed, so not removed
+Package 'libapache2-mod-rivet' is not installed, so not removed
+Package 'libapache2-mod-rivet-doc' is not installed, so not removed
+Package 'libapache2-mod-rpaf' is not installed, so not removed
+Package 'libapache2-mod-ruid2' is not installed, so not removed
+Package 'libapache2-mod-ruwsgi' is not installed, so not removed
+Package 'libapache2-mod-ruwsgi-dbg' is not installed, so not removed
+Package 'libapache2-mod-security2' is not installed, so not removed
+Package 'libapache2-mod-shib' is not installed, so not removed
+Package 'libapache2-mod-tile' is not installed, so not removed
+Package 'libapache2-mod-upload-progress' is not installed, so not removed
+Package 'libapache2-mod-uwsgi' is not installed, so not removed
+Package 'libapache2-mod-uwsgi-dbg' is not installed, so not removed
+Package 'libapache2-mod-vhost-ldap' is not installed, so not removed
+Package 'libapache2-mod-watchcat' is not installed, so not removed
+Package 'libapache2-mod-xforward' is not installed, so not removed
+Package 'libapache2-mod-xsendfile' is not installed, so not removed
+Package 'libapache2-mod-apparmor' is not installed, so not removed
+Package 'libapache2-mod-php8.1' is not installed, so not removed
+Package 'libapache2-mod-wsgi-py3' is not installed, so not removed
+Package 'libapache2-mod-md' is not installed, so not removed
+Package 'libapache2-mod-php7.4' is not installed, so not removed
+Package 'libapache2-mod-php8.0' is not installed, so not removed
+Package 'libapache2-mod-proxy-uwsgi' is not installed, so not removed
+Package 'libapache2-mod-svn' is not installed, so not removed
+The following packages were automatically installed and are no longer required:
+  augeas-lenses libapr1 libaprutil1 libaprutil1-ldap libaugeas0 liblua5.3-0 python3-augeas
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  apache2* apache2-bin* apache2-data* apache2-utils* libaprutil1-dbd-sqlite3* python3-certbot-apache*
+0 upgraded, 0 newly installed, 6 to remove and 39 not upgraded.
+After this operation, 7402 kB disk space will be freed.
+Do you want to continue? [Y/n] 
+(Reading database ... 97542 files and directories currently installed.)
+Removing python3-certbot-apache (1.21.0-1) ...
+Removing apache2 (2.4.52-1ubuntu4.4) ...
+Removing apache2-bin (2.4.52-1ubuntu4.4) ...
+dpkg: warning: while removing apache2-bin, directory '/var/lib/apache2' not empty so not removed
+Removing apache2-data (2.4.52-1ubuntu4.4) ...
+Removing apache2-utils (2.4.52-1ubuntu4.4) ...
+Removing libaprutil1-dbd-sqlite3:amd64 (1.6.1-5ubuntu4.22.04.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for ufw (0.36.1-4build1) ...
+Rules updated for profile 'Nginx Full'
+
+(Reading database ... 96996 files and directories currently installed.)
+Purging configuration files for apache2 (2.4.52-1ubuntu4.4) ...
+dpkg: warning: while removing apache2, directory '/etc/apache2/sites-available' not empty so not removed
+Processing triggers for ufw (0.36.1-4build1) ...
+Rules updated for profile 'Nginx Full'
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo rm -rf /etc/apache2
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo deluser --remove-home apache2
+sudo delgroup apache2
+/usr/sbin/deluser: The user `apache2' does not exist.
+The group `apache2' does not exist.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:01:15 UTC; 7min ago
+       Docs: man:nginx(8)
+   Main PID: 31555 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 9.0M
+        CPU: 109ms
+     CGroup: /system.slice/nginx.service
+             ├─31555 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─31583 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+             └─31584 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl reload nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:01:15 UTC; 7min ago
+       Docs: man:nginx(8)
+    Process: 32072 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload (code=exited, status=0/SUCCESS)
+   Main PID: 31555 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 8.9M
+        CPU: 135ms
+     CGroup: /system.slice/nginx.service
+             ├─31555 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─32073 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+             └─32074 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo service nginx status
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:01:15 UTC; 8min ago
+       Docs: man:nginx(8)
+    Process: 32072 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload (code=exited, status=0/SUCCESS)
+   Main PID: 31555 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 8.9M
+        CPU: 135ms
+     CGroup: /system.slice/nginx.service
+             ├─31555 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─32073 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+             └─32074 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+
+Apr 24 17:01:15 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Starting A high performance web server and a reverse proxy server...
+Apr 24 17:01:15 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Started A high performance web server and a reverse proxy server.
+Apr 24 17:04:30 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Reloading A high performance web server and a reverse proxy server...
+Apr 24 17:04:30 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Reloaded A high performance web server and a reverse proxy server.
+Apr 24 17:09:12 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Reloading A high performance web server and a reverse proxy server...
+Apr 24 17:09:12 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Reloaded A high performance web server and a reverse proxy server.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl stop nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+○ nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: inactive (dead) since Mon 2023-04-24 17:09:43 UTC; 3s ago
+       Docs: man:nginx(8)
+    Process: 32072 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload (code=exited, status=0/SUCCESS)
+    Process: 32087 ExecStop=/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid (code=exited, status=0/>
+   Main PID: 31555 (code=exited, status=0/SUCCESS)
+        CPU: 144ms
+
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl reload nginx
+nginx.service is not active, cannot reload.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl start nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:10:44 UTC; 2s ago
+       Docs: man:nginx(8)
+    Process: 32099 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 32100 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 32101 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 3.3M
+        CPU: 27ms
+     CGroup: /system.slice/nginx.service
+             ├─32101 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─32102 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+             └─32103 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt install python-certbot-nginx^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ ^C
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt-get update
+Get:1 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Hit:2 http://mirrors.digitalocean.com/ubuntu jammy InRelease                                                                      
+Hit:3 http://mirrors.digitalocean.com/ubuntu jammy-updates InRelease                                          
+Hit:4 https://repos.insights.digitalocean.com/apt/do-agent main InRelease                                     
+Hit:5 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                 
+Hit:6 http://mirrors.digitalocean.com/ubuntu jammy-backports InRelease                                        
+Fetched 110 kB in 1s (165 kB/s)
+Reading package lists... Done
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt install python-certbot-nginx
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package python-certbot-nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo snap install core; sudo snap refresh core
+core 16-2.58.3 from Canonical✓ installed
+snap "core" has no updates available
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo apt remove certbot
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  augeas-lenses libapr1 libaprutil1 libaprutil1-ldap libaugeas0 liblua5.3-0 python3-acme python3-augeas python3-certbot
+  python3-configargparse python3-icu python3-josepy python3-parsedatetime python3-requests-toolbelt python3-rfc3339
+  python3-zope.component python3-zope.event python3-zope.hookable
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  certbot
+0 upgraded, 0 newly installed, 1 to remove and 39 not upgraded.
+After this operation, 63.5 kB disk space will be freed.
+Do you want to continue? [Y/n] 
+(Reading database ... 96832 files and directories currently installed.)
+Removing certbot (1.21.0-1build1) ...
+Processing triggers for man-db (2.10.2-1) ...
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo snap install --classic certbot
+certbot 2.5.0 from Certbot Project (certbot-eff✓) installed
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ln -s /snap/bin/certbot /usr/bin/certbot
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo mkdir -p /var/www/your_domain/html
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo mkdir -p /var/www/beefreecommunity.org/html
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo chown -R /var/www/beefreecommunity.org/html
+chown: missing operand after ‘/var/www/beefreecommunity.org/html’
+Try 'chown --help' for more information.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo chown -R $USER:$USER /var/www/beefreecommunity.org/html
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo chmod -R 755 /var/www/beefreecommunity.org
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/beefreecommunity.org
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo ln -s /etc/nginx/sites-available/beefreecommunity.org /etc/nginx/sites-enabled/
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/nginx.conf
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl restart nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/
+beefreecommunity.org  default               
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/
+beefreecommunity.org  default               
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/beefreecommunity.org 
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo certbot --nginx -d beefreecommunity.org -d www.beefreecommunity.org
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Enter email address (used for urgent renewal and security notices)
+ (Enter 'c' to cancel): rajeev7a@gmail.com
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.3-September-21-2022.pdf. You must
+agree in order to register with the ACME server. Do you agree?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Y
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would you be willing, once your first certificate is successfully issued, to
+share your email address with the Electronic Frontier Foundation, a founding
+partner of the Let's Encrypt project and the non-profit organization that
+develops Certbot? We'd like to send you email about our work encrypting the web,
+EFF news, campaigns, and ways to support digital freedom.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: N
+Account registered.
+Requesting a certificate for beefreecommunity.org and www.beefreecommunity.org
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/beefreecommunity.org/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/beefreecommunity.org/privkey.pem
+This certificate expires on 2023-07-23.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+Deploying certificate
+Successfully deployed certificate for beefreecommunity.org to /etc/nginx/sites-enabled/beefreecommunity.org
+Successfully deployed certificate for www.beefreecommunity.org to /etc/nginx/sites-enabled/beefreecommunity.org
+Congratulations! You have successfully enabled HTTPS on https://beefreecommunity.org and https://www.beefreecommunity.org
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl status snap.certbot.renew.service
+○ snap.certbot.renew.service - Service for snap application certbot.renew
+     Loaded: loaded (/etc/systemd/system/snap.certbot.renew.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● snap.certbot.renew.timer
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/default
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl restart nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/beefreecommunity.org 
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl restart nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2023-04-24 17:29:25 UTC; 10s ago
+       Docs: man:nginx(8)
+    Process: 33302 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 33303 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 33305 (nginx)
+      Tasks: 3 (limit: 4661)
+     Memory: 4.2M
+        CPU: 45ms
+     CGroup: /system.slice/nginx.service
+             ├─33305 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─33306 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+             └─33307 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+
+Apr 24 17:29:25 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Starting A high performance web server and a reverse proxy server...
+Apr 24 17:29:25 ubuntu-s-2vcpu-4gb-nyc1-01 systemd[1]: Started A high performance web server and a reverse proxy server.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/beefreecommunity.org 
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl restart nginx
+Job for nginx.service failed because the control process exited with error code.
+See "systemctl status nginx.service" and "journalctl -xeu nginx.service" for details.
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nginx -t
+nginx: [emerg] "proxy_http_version" directive is duplicate in /etc/nginx/sites-enabled/beefreecommunity.org:16
+nginx: configuration file /etc/nginx/nginx.conf test failed
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/beefreecommunity.org 
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo systemctl restart nginx
+alice@ubuntu-s-2vcpu-4gb-nyc1-01:~$ sudo nano /etc/nginx/sites-available/beefreecommunity.org client_loop: send disconnect: Broken pipe

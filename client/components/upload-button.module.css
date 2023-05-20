@@ -1,0 +1,39 @@
+.upload-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 0.5rem;
+  color: #616161;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.upload-button:hover {
+  background-color: #e8e8e8;
+}
+
+.upload-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  stroke-width: 1.5;
+}
+
+.upload-button.dark {
+  background-color: #303030;
+  color: #f5f5f5;
+}
+
+.upload-button.dark:hover {
+  background-color: #505050;
+}
+
+.upload-button.dark svg {
+  stroke: #f5f5f5;
+}

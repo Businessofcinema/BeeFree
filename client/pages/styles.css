@@ -1,0 +1,110 @@
+/* General resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  padding: 0 2rem 2rem 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+  background: #fff;
+  color: #333;
+}
+
+li,
+p {
+  line-height: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+a {
+  font-weight: 500;
+}
+
+hr {
+  border: 1px solid #ddd;
+}
+
+iframe {
+  background: #ccc;
+  border: 1px solid #ccc;
+  height: 10rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  filter: invert(1);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.col-33 {
+  display: flex;
+  flex-direction: column;
+  width: 31%;
+  margin: 1%;
+}
+
+/* Dark mode styles */
+body {
+  background: #222;
+  color: #eee;
+}
+
+li,
+p {
+  color: #eee;
+}
+
+a {
+  text-decoration: none;
+  color: #eee;
+  font-weight: 500;
+  transition: color 0.3s ease, border 0.3s ease;
+  border-bottom: 1px solid rgba(212, 166, 17, 0.6);
+}
+
+a:visited {
+  color: #cdcdcd;
+}
+
+a:hover,
+a:focus {
+  color: rgb(255, 215, 64);
+  border-bottom: 1px solid rgba(212, 166, 17, 1);
+}
+
+
+hr {
+  border-color: #666;
+}
+
+iframe {
+  background: #222;
+  border-color: #eee;
+  filter: none;
+}
+
+.titlecase {
+  text-transform: capitalize;
+}
+
+.red-font {
+  color: rgb(194, 60, 60);
+}

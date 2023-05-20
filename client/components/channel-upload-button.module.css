@@ -1,0 +1,64 @@
+.button {
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    float: right;
+    margin-top: -2em;
+  }
+
+.button:hover {
+    background-color: #096dd9;
+}
+
+@keyframes pulsing {
+    0% {
+        background-color: #096dd9;
+    }
+    50% {
+        background-color: #1f98e2;
+    }
+    100% {
+        background-color: #096dd9;
+    }
+  }
+
+.button:disabled {
+    cursor: progress;
+    background: #2186c1;
+    min-width: 250px;
+    animation-name: pulsing;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+}
+
+.progressBar {
+    height: 20px;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+    margin-bottom: 8px;
+}
+
+.progress {
+    height: 100%;
+    border-radius: 8px;
+    background-color: #d8d8d8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #020243;
+    transition: width 0.2s ease;
+    min-width: 20px;
+}
+
+.loadingText {
+    font-size: 14px;
+    font-weight: 500;
+}

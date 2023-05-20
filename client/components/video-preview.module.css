@@ -1,0 +1,39 @@
+/* VideoPreview.module.css */
+.container {
+    position: relative;
+    cursor: pointer;
+    background-color: #2c2c2e;
+    border-radius: 4px;
+    overflow: hidden;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid transparent;
+    transition: border 300ms linear, transform 0.2s ease-in-out;
+}
+
+.container:hover,
+.container:active {
+    /* border-color: rgb(46, 137, 168); */
+    border-color: #cdcdcd;
+}
+
+
+.container:hover {
+    transform: scale(1.05);
+}
+
+.video {
+    width: 100%;
+    display: block;
+}
+
+.title {
+    position: absolute;
+    width: calc(100% - 10px);
+    bottom: 5px;
+    padding: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.6);
+}

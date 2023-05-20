@@ -1,0 +1,44 @@
+/* modal-video-player.module.css */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.video {
+    width: 100%;
+    display: block;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 24px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.title {
+    margin: 0.75em 0;
+    font-size: 1.25rem;
+}
+
+.description {
+    font-size: 0.9rem;
+}

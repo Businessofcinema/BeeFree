@@ -1,0 +1,39 @@
+/* VideoThumbnail.module.css */
+.thumbnailWrapper {
+    position: relative;
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: border 300ms linear;
+}
+
+.linkWrap {
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid transparent;
+    transition: border 300ms linear;
+}
+
+.linkWrap:hover,
+.linkWrap:active {
+    /* border-color: rgb(46, 137, 168); */
+    border-color: #cdcdcd;
+}
+
+.thumbnailImage {
+    width: 100%;
+    height: auto;
+}
+
+.videoTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.videoInfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
