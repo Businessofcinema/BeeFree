@@ -10,7 +10,7 @@ require('./channel/channelVideoListWorker');
 require('./channel/videoDownloadWorker');
 require('./channel/videoUploadWorker');
 
-const allowedOrigins = ['https://beefree-dev.vercel.app', 'http://localhost:3000'];
+const allowedOrigins = ['https://beefree-dev.vercel.app', 'http://localhost:3000', 'https://beefree.vercel.app', 'https://beefreecommunity.net'];
 app.use(
   cors({
     origin: (origin, callback) => {
