@@ -78,26 +78,30 @@ const listUploads = async (req, res) => {
   const pageSize = parseInt(req.query.pageSize) || PAGE_SIZE; // Number of items per page (default to PAGE_SIZE)
 
   let uploadList = await getMetadata('uploadList');
-  console.log('uploadList', uploadList.length);
+  if (uploadList) {
+    console.log('uploadList', uploadList.length);
 
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = page * pageSize;
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
 
-  let uploads = uploadList.slice(startIndex, endIndex);
+    let uploads = uploadList.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(uploadList.length / pageSize);
-  const currentPage = page > totalPages ? totalPages : page;
-  res.setHeader('Access-Control-Allow-Origin', req.get('origin') || '*');
+    const totalPages = Math.ceil(uploadList.length / pageSize);
+    const currentPage = page > totalPages ? totalPages : page;
+    res.setHeader('Access-Control-Allow-Origin', req.get('origin') || '*');
 
-  res.send({
-    uploads,
-    pagination: {
-      totalPages,
-      currentPage,
-      pageSize,
-      totalItems: uploadList.length,
-    },
-  });
+    res.send({
+      uploads,
+      pagination: {
+        totalPages,
+        currentPage,
+        pageSize,
+        totalItems: uploadList.length,
+      },
+    });
+  } else {
+    res.send({ uploads: [], pagination: { totalPages: 0, currentPage: 0, pageSize: 0, totalItems: 0 } });
+  }
 };
 
 module.exports = { getWelcomeMessage, downloadUpload, listUploads };

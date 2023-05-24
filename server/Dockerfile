@@ -25,4 +25,4 @@ RUN /bin/sh -c 'chmod +x bin/youtube-dl'
 EXPOSE 3001
 
 # Start Redis and the Node.js application
-CMD ["sh", "-c", "redis-server & npm start"]
+CMD ["sh", "-c", "redis-server & npm run dev"]
