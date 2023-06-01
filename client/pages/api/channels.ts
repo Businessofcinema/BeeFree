@@ -40,6 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         auth,
         playlistId: playlistId,
         part: ['snippet', 'status'],
+        maxResults: 30,
       });
     const videos = videoRes.data.items?.map((item: any) => ({
         id: item.snippet.resourceId?.videoId,
