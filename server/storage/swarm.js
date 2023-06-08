@@ -1,14 +1,16 @@
-const { Bee } = require('@ethersphere/bee-js');
+const { Bee, BeeDebug } = require('@ethersphere/bee-js');
 const AbstractStorageProvider = require('./abstractStorage');
 const { formatPayload, bytesToSize } = require('../utils');
 const redis = require('redis');
+const FormData = require('form-data');
 const redisClient = redis.createClient();
 
 class SwarmProvider extends AbstractStorageProvider {
-    constructor(url) {
+    constructor(url, debugurl) {
         super();
         this.client = new Bee(url);
-        this.reference = null;
+        this.debugclient = new BeeDebug(debugurl);
+        this.result = null;
         this.filename = null;
     }
 
@@ -21,18 +23,18 @@ class SwarmProvider extends AbstractStorageProvider {
             const totalSize = file[0].size;
 
             let uploaded = 0;
-            const onUploadProgress = (progress) => {
-                uploaded += progress.loaded;
-                const pct = 100 * (uploaded / totalSize);
-                res.write(this.formatPayload('upload', `${pct.toFixed(2)}% complete`));
-                console.log(`Uploading... ${pct.toFixed(2)}% complete`);
-            };
 
-            this.reference = await this.client.uploadData(file, { onUploadProgress });
-            console.log('Uploaded file with reference:', this.reference);
+            const batches = await this.debugclient.getAllPostageBatch();
+            
+            res.write(formatPayload('BATCH ID:' + batches[0].batchID.toString()));
+
+            //console.log(file, batchID);
+            this.result = await this.client.uploadFile(batches[0].batchID.toString(), await file[0].stream(), this.filename, { contentType: "video/mp4" });
+            console.log('Uploaded file with reference:', this.result.reference);
+            res.write(formatPayload('Uploaded file with reference:' + this.result.reference));
 
             // Store the reference in Redis
-            redisClient.lpush('uploads', JSON.stringify({ reference: this.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.reference) }));
+            redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
         } catch (error) {
             throw error;
         }
@@ -43,21 +45,16 @@ class SwarmProvider extends AbstractStorageProvider {
             this.filename = file[0].name.substring(1, file[0].name.length);
             await job.updateProgress({ eventType: 'upload', event: 'Uploading video: ' + this.filename + ' to Swarm' });
 
-            const totalSize = file[0].size;
+            
+            redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
 
-            let uploaded = 0;
-            const onUploadProgress = async (progress) => {
-                uploaded += progress.loaded;
-                const pct = 100 * (uploaded / totalSize);
-                await job.updateProgress({ eventType: 'upload', event: `${pct.toFixed(2)}% complete` });
-            };
-
-            this.reference = await this.client.uploadData(file, { onUploadProgress });
+            this.reference = await this.client.uploadData(await file[0].stream(), this.filename);
             console.log('Uploaded file with reference:', this.reference);
         } catch (error) {
             throw error;
         }
     }
+
 
     getStorageUrl(reference) {
         return `${this.client.url}/bzz/${reference ? reference : this.reference}/`;
@@ -69,7 +66,7 @@ class SwarmProvider extends AbstractStorageProvider {
 
     async listUploads() {
         return new Promise((resolve, reject) => {
-            redisClient.lrange('uploads', 0, -1, (err, uploads) => {
+            redisClient.lRange('uploads', 0, -1, (err, uploads) => {
                 if (err) {
                     reject(err);
                 } else {
