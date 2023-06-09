@@ -23,22 +23,35 @@ class SwarmProvider extends AbstractStorageProvider {
             const totalSize = file[0].size;
 
             let uploaded = 0;
+            const createbatch = await this.debugclient.createPostageBatch("100",17);
 
-            const batches = await this.debugclient.getAllPostageBatch();
-            
-            res.write(formatPayload('BATCH ID:' + batches[0].batchID.toString()));
+            const allBatches = await this.debugclient.getAllPostageBatch();
 
-            //console.log(file, batchID);
-            this.result = await this.client.uploadFile(batches[0].batchID.toString(), await file[0].stream(), this.filename, { contentType: "video/mp4" });
+            // Filter batches
+            const usableBatches = allBatches.filter(batch => batch.usable && !batch.expired);
+
+            if (usableBatches.length === 0) {
+                throw new Error("No usable batches found");
+            }
+
+            res.write(formatPayload('BATCH ID:' + usableBatches[0].batchID.toString()));
+
+            this.result = await this.client.uploadFile(usableBatches[0].batchID.toString(), await file[0].stream(), this.filename, { contentType: "video/mp4" });
             console.log('Uploaded file with reference:', this.result.reference);
             res.write(formatPayload('Uploaded file with reference:' + this.result.reference));
-
-            // Store the reference in Redis
-            redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
-        } catch (error) {
+            try {
+                // Store the reference in Redis
+                const result = await redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
+                res.write(formatPayload('Redis lPush result:', result));
+            } catch (error) {
+                console.error('Error with Redis lPush:', error);
+            }
+        }
+        catch{
             throw error;
         }
     }
+
 
     async storeJob(file, job) {
         try {
