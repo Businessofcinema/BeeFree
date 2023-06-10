@@ -12,6 +12,8 @@ class SwarmProvider extends AbstractStorageProvider {
         this.debugclient = new BeeDebug(debugurl);
         this.result = null;
         this.filename = null;
+        this.reference=null;
+        this.cid=null;
     }
 
     async store(file, res) {
@@ -35,10 +37,14 @@ class SwarmProvider extends AbstractStorageProvider {
             }
 
             res.write(formatPayload('BATCH ID:' + usableBatches[0].batchID.toString()));
-
+           
+          
             this.result = await this.client.uploadFile(usableBatches[0].batchID.toString(), await file[0].stream(), this.filename, { contentType: "video/mp4" });
+            this.reference=this.result.reference;
+            this.cid=this.result.cid();
             console.log('Uploaded file with reference:', this.result.reference);
             res.write(formatPayload('Uploaded file with reference:' + this.result.reference));
+            res.write(formatPayload('Uploaded file with cid:' + this.result.cid()));
             try {
                 // Store the reference in Redis
                 const result = await redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
@@ -62,6 +68,7 @@ class SwarmProvider extends AbstractStorageProvider {
             redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
 
             this.reference = await this.client.uploadData(await file[0].stream(), this.filename);
+            res.write(formatPayload('Uploaded file with reference:', this.reference));
             console.log('Uploaded file with reference:', this.reference);
         } catch (error) {
             throw error;
