@@ -10,25 +10,19 @@ class SwarmProvider extends AbstractStorageProvider {
         super();
         this.client = new Bee(url);
         this.debugclient = new BeeDebug(debugurl);
-        this.result = null;
         this.filename = null;
-        this.reference=null;
-        this.cid=null;
+        this.reference = null;
+        this.cid = null;
     }
 
     async store(file, res) {
         try {
             this.filename = file[0].name.substring(1, file[0].name.length);
+            
             console.log('Uploading video to Swarm', this.filename);
             res.write(formatPayload('upload', 'Uploading video: ' + this.filename + ' to Swarm'));
 
-            const totalSize = file[0].size;
-
-            let uploaded = 0;
-            const createbatch = await this.debugclient.createPostageBatch("100",17);
-
             const allBatches = await this.debugclient.getAllPostageBatch();
-
             // Filter batches
             const usableBatches = allBatches.filter(batch => batch.usable && !batch.expired);
 
@@ -36,22 +30,13 @@ class SwarmProvider extends AbstractStorageProvider {
                 throw new Error("No usable batches found");
             }
 
-            res.write(formatPayload('BATCH ID:' + usableBatches[0].batchID.toString()));
+            res.write(formatPayload('Using stamp:' + usableBatches[0].batchID.toString()));
            
-          
             this.result = await this.client.uploadFile(usableBatches[0].batchID.toString(), await file[0].stream(), this.filename, { contentType: "video/mp4" });
-            this.reference=this.result.reference;
-            this.cid=this.result.cid();
-            console.log('Uploaded file with reference:', this.result.reference);
-            res.write(formatPayload('Uploaded file with reference:' + this.result.reference));
-            res.write(formatPayload('Uploaded file with cid:' + this.result.cid()));
-            try {
-                // Store the reference in Redis
-                const result = await redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
-                res.write(formatPayload('Redis lPush result:', result));
-            } catch (error) {
-                console.error('Error with Redis lPush:', error);
-            }
+            this.reference = this.result.reference;
+            this.cid = this.result.cid();
+            console.log('Uploaded file with reference: %s cid %s', this.result.reference, this.result.cid());
+            res.write(formatPayload('Uploaded file with reference:' + this.result.reference + ' cid:' + this.result.cid()));
         }
         catch{
             throw error;
@@ -63,13 +48,22 @@ class SwarmProvider extends AbstractStorageProvider {
         try {
             this.filename = file[0].name.substring(1, file[0].name.length);
             await job.updateProgress({ eventType: 'upload', event: 'Uploading video: ' + this.filename + ' to Swarm' });
-
             
-            redisClient.lPush('uploads', JSON.stringify({ reference: this.result.reference, size: bytesToSize(totalSize), url: this.getStorageUrl(this.result.reference) }));
+            const allBatches = await this.debugclient.getAllPostageBatch();
+            // Filter batches
+            const usableBatches = allBatches.filter(batch => batch.usable && !batch.expired);
 
-            this.reference = await this.client.uploadData(await file[0].stream(), this.filename);
-            res.write(formatPayload('Uploaded file with reference:', this.reference));
-            console.log('Uploaded file with reference:', this.reference);
+            if (usableBatches.length === 0) {
+                throw new Error("No usable batches found");
+            }
+
+            res.write(formatPayload('Using stamp:' + usableBatches[0].batchID.toString()));
+
+            this.result = await this.client.uploadFile(usableBatches[0].batchID.toString(), await file[0].stream(), this.filename, { contentType: "video/mp4" });
+            this.reference = this.result.reference;
+            this.cid = this.result.cid();
+            console.log('Uploaded file with reference: %s cid %s', this.result.reference, this.result.cid());
+            res.write(formatPayload('Uploaded file with reference:' + this.result.reference + ' cid:' + this.result.cid()));
         } catch (error) {
             throw error;
         }
@@ -77,11 +71,12 @@ class SwarmProvider extends AbstractStorageProvider {
 
 
     getStorageUrl(reference) {
-        return `${this.client.url}/bzz/${reference ? reference : this.reference}/`;
+        return `https://api.gateway.ethswarm.org/bzz/${reference ? reference : this.reference}/`;
     }
 
     getResourceUrl(reference, filename) {
-        return `${this.client.url}/bzz/${reference ? reference : this.reference}/${filename ? encodeURI(filename) : encodeURI(this.filename)}`;
+        //return `https://${cid ? cid : this.cid}.bzz.link/${filename ? filename: this.filename}`;
+        return `https://api.gateway.ethswarm.org/bzz/${reference ? reference : this.reference}/`;
     }
 
     async listUploads() {
