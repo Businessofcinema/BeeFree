@@ -35,23 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         thumbnail: item.snippet?.thumbnails?.high?.url!,
     })) || [];
 
-    // Get videos from "Uploads" playlist
-    const videoRes: any = await youtube.playlistItems.list({
-        auth,
-        playlistId: playlistId,
-        part: ['snippet', 'status'],
-        maxResults: 30,
-      });
-    const videos = videoRes.data.items?.map((item: any) => ({
-        id: item.snippet.resourceId?.videoId,
-        title: item.snippet.title,
-        description: item.snippet.description,
-        thumbnailUrl: item.snippet.thumbnails?.high?.url,
-        publishedAt: item.snippet.publishedAt,
-        status: item.status.privacyStatus,
-    }));
-
-    res.status(200).json({channels, videos});
+    res.status(200).json({ channels, uploadsPlaylist: playlistId });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

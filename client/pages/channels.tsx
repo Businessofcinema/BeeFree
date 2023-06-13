@@ -7,6 +7,8 @@ import UploadButton from "../components/upload-button"
 import LoadingModal from "../components/loading-modal"
 import ChannelUploadButton from "../components/channel-upload-button"
 import { SERVER_URL } from "../components/_constants"
+import PaginationBar from "../components/pagination-bar"
+import { PaginationProps } from "../components/_interfaces"
 
 let streamSource: any = null;
 
@@ -15,14 +17,18 @@ export default function ChannelsPage() {
 
   const { data: session } = useSession()
   const [channel, setChannel] = useState<any>()
+  const [uploadsID, setUploadsID] = useState<string>("")
   const [content, setContent] = useState<any[]>()
   const [youtubeCalled, setYoutubeCalled] = useState<boolean>(false)
-  const [uploadMap, setUploadMap] = useState<any>({});
-  const [uploading, setUploading] = useState<boolean>(false);
-  const [uploadEvent, setUploadEvent] = useState<any>();
-  const [progressLog, setProgressLog] = useState("");
-  const [progress, setProgress] = useState(5);
-  const [uploadError, setUploadError] = useState(false);
+  const [uploadMap, setUploadMap] = useState<any>({})
+  const [uploading, setUploading] = useState<boolean>(false)
+  const [uploadEvent, setUploadEvent] = useState<any>()
+  const [progressLog, setProgressLog] = useState("")
+  const [progress, setProgress] = useState(5)
+  const [uploadError, setUploadError] = useState(false)
+  const [pageTokens, setPageTokens] = useState<string[]>([])
+  const [targetPage, setTargetPage] = useState<number>(1)
+  const [pagination, setPagination] = useState<PaginationProps>({currentPage: 1, pageSize: 0, totalItems: 0, totalPages: 0})
 
   const displayPayload = (payload: any) => {
     if (payload.event && payload.event.title) {
@@ -83,8 +89,8 @@ export default function ChannelsPage() {
       if (json.channels) {
         setChannel(json.channels[0]);
       }
-      if (json.videos) {
-        setContent(json.videos);
+      if (json.uploadsPlaylist) {
+        setUploadsID(json.uploadsPlaylist);
       }
     };
     if (!youtubeCalled) {
@@ -92,6 +98,49 @@ export default function ChannelsPage() {
       fetchData();
     }
   }, [session]);
+
+  // Load videos
+  // if (json.videos) {
+  //   setContent(json.videos);
+  // }
+
+  // Load page of uploaded videos
+  useEffect(() => {
+    const fetchVideos = async () => {
+      let url = `/api/playlist?id=${uploadsID}`
+      if (targetPage != pagination.currentPage) {
+        if (targetPage < pagination.currentPage) {
+          // go back a page
+          url += `&pageToken=${pageTokens[0]}`
+        } else if (pageTokens[1]) {
+          // go forward a page
+          url += `&pageToken=${pageTokens[1]}`
+        }
+      }
+      const res = await fetch(url);
+      const json = await res.json();
+      if (json.videos) {
+        setContent(json.videos);
+      }
+      if (json.pageInfo) {
+        let {totalResults, resultsPerPage} = json.pageInfo;
+        let newInfo = {...pagination}
+        newInfo.totalItems = totalResults
+        newInfo.pageSize = resultsPerPage
+        newInfo.totalPages = Math.ceil(totalResults/resultsPerPage)
+        newInfo.currentPage = targetPage
+        setPagination(newInfo)
+      }
+      if (json.pageTokens) {
+        setPageTokens(json.pageTokens)
+      } else {
+        setPageTokens([])
+      }
+    };
+    if (uploadsID) {
+      fetchVideos();
+    }
+  }, [uploadsID, targetPage]);
 
   useEffect(() => {
     if (uploadEvent) {
@@ -175,6 +224,13 @@ export default function ChannelsPage() {
               </div>
             );
           })}
+      </div>
+      <div className="row">
+        <PaginationBar onPageChange={(p) => setTargetPage(p)}
+            currentPage={pagination.currentPage}
+            totalItems={pagination.totalItems}
+            totalPages={pagination.totalPages}
+            pageSize={pagination.pageSize} />
       </div>
     </Layout>
   );
