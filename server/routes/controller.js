@@ -3,10 +3,12 @@ const { formatPayload, errorPayload, updateUploadList } = require('../utils');
 const axios = require('axios');
 
 const WEB3STORAGE_TOKEN = process.env.WEB3STORAGE_TOKEN;
-const { Web3StorageProvider, EthereumSwarmProvider } = require('../storage');
+ 
+const { Web3StorageProvider, SwarmProvider } = require('../storage');
 const { getMetadata } = require('../redis');
 
-let storageProvider = new Web3StorageProvider(WEB3STORAGE_TOKEN);
+//let storageProvider = new Web3StorageProvider(WEB3STORAGE_TOKEN);
+let storageProvider = new SwarmProvider(process.env.SWARM_HOST_URL, process.env.SWARM_DEBUG_HOST_URL);
 
 const getWelcomeMessage = (req, res) => {
   res.send('API provides endpoints for downloading and uploading YouTube videos to a decentralized storage system, as well as listing videos stored in the decentralized storage.');

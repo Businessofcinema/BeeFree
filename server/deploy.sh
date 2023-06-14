@@ -10,4 +10,4 @@ docker container prune
 docker build -t bf .
 
 # Start a new Docker container named "bf" in detached mode (-d), mapping port 3001 to the container's port 3001 (-p 3001:3001), and setting the NODE_ENV environment variable to "production"
-docker run -d --name bf -p 3001:3001 -e NODE_ENV=production bf
+docker run -d --name bf -p 3001:3001 -e NODE_ENV=production -e SWARM_HOST_URL=http://64.227.35.202:1633 -e SWARM_DEBUG_HOST_URL=http://64.227.35.202:1635 bf
