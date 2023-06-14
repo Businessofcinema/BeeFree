@@ -99,11 +99,6 @@ export default function ChannelsPage() {
     }
   }, [session]);
 
-  // Load videos
-  // if (json.videos) {
-  //   setContent(json.videos);
-  // }
-
   // Load page of uploaded videos
   useEffect(() => {
     const fetchVideos = async () => {
