@@ -1,0 +1,70 @@
+/* UploadProgress.module.css */
+.container {
+    display: inline-block;
+}
+
+.button {
+    background: rgba(0,0,0,0.2);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.modal {
+    background: #222;
+    border-radius: 10px;
+    color: #fff;
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.55);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    z-index: 5000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.closeButton {
+    font-family: 'Roboto', sans-serif;
+    top: 0;
+    right: 0;
+    font-size: 24px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.modalDetails, .modalDetails p {
+    font-family:'Courier New', Courier, monospace;
+    margin-bottom: 0.1em;
+}
+
+.modalDetails {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #121212;
+    border-radius: 5px;
+    color: #b0ffa7;
+    padding: 0.5em;
+}
